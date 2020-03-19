@@ -1,0 +1,20 @@
+font-family: halvetica;
+
+
+
+
+colors:
+tsenher  #1A2155
+door n oroh budeg tsenher #0F62AC
+ulbar shar #EA700D
+
+
+http://172.25.0.76:9443/carbon/service-mgt/index.jsp?region=region1&item=services_list_menu
+
+
+<<Modal хийхдээ харах>>
+http://intranet/sites/xaclaw/Pages/home.aspx?lawid=4589
+
+// 
+1. Modal хийх үед гарч буй арын хэсэг дарагдах алдаа
+2. 

@@ -1,0 +1,79 @@
+         <payloadFactory media-type="json">
+            <format>
+{
+          "Source":"$1",
+          "Function":"$2",
+          "UserId":"$3",
+          "SecurityCode":"$4",
+          "Status" : "$8",  
+          "RequestId":"$5",
+          "RequestType":"A",
+          "LanguageId":"$7",
+          "Response": $9
+}
+               
+  </format>
+            <args>
+               <arg evaluator="xml" expression="$ctx:Source"/>
+               <arg evaluator="xml" expression="$ctx:Function"/>
+               <arg evaluator="xml" expression="$ctx:UserId"/>
+               <arg evaluator="xml" expression="$ctx:SecurityCode"/>
+               <arg evaluator="xml" expression="$ctx:RequestId"/>
+               <arg evaluator="xml" expression="$ctx:RequestType"/>
+               <arg evaluator="xml" expression="$ctx:LangId"/>
+               <arg evaluator="xml" expression="$ctx:header_status"/>
+               <arg evaluator="xml" expression="$ctx:res"/>
+            </args>
+         </payloadFactory>  
+
+
+
+SELECT emp.empid,
+       emp.dname, 
+       emp.pname, 
+       emp.employeename, 
+       emp.gender,
+       pic.PICTURETUMB PICTUREDATA
+FROM BI_HREMPLOYEE emp
+left join HREMPPICTURE pic on pic.empid = emp.empid
+WHERE (status = (N'Идэвхтэй') or status = (N'Түр Эзгүй')) and depid = ?
+ORDER BY emp.employeename ASC
+
+
+
+
+
+
+
+
+
+
+
+
+                  <payloadFactory media-type="json">
+            <format>
+{
+          "Source":"$1",
+          "Function":"$2",
+          "UserId":"$3",
+          "SecurityCode":"$4",
+          "Status" : "$8",  
+          "RequestId":"$5",
+          "RequestType":"A",
+          "LanguageId":"$7",
+          "Response": $9
+}
+               
+  </format>
+            <args>
+               <arg evaluator="xml" expression="$ctx:Source"/>
+               <arg evaluator="xml" expression="$ctx:Function"/>
+               <arg evaluator="xml" expression="$ctx:UserId"/>
+               <arg evaluator="xml" expression="$ctx:SecurityCode"/>
+               <arg evaluator="xml" expression="$ctx:RequestId"/>
+               <arg evaluator="xml" expression="$ctx:RequestType"/>
+               <arg evaluator="xml" expression="$ctx:LangId"/>
+               <arg evaluator="xml" expression="$ctx:header_status"/>
+               <arg evaluator="xml" expression="$ctx:res"/>
+            </args>
+         </payloadFactory>

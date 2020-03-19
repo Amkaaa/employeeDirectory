@@ -1,0 +1,15 @@
+﻿CREATE OR REPLACE PROCEDURE SP_SearchEmployeeByDepName(p_in_dname IN varchar2,
+                                                       p_in_status IN varchar2,
+                                                       p_in_status2 IN varchar2,
+                                                       p_returndata OUT sys_refcursor) 
+IS BEGIN
+
+  dbms_output.put_line('Input : ' || p_in_dname);
+  OPEN p_returnData 
+  FOR
+    SELECT EMPID, DEPID, DNAME, PNAME, HIREDDATE, employeename, GENDER, STATUS, MOBILEPHONE, EMAIL
+      FROM BI_HREMPLOYEE t
+     WHERE LOWER(DNAME) LIKE '' || p_in_dname || '%'
+           AND (status = ''|| p_in_status ||'' OR status = ''||  p_in_status2 ||'');
+END;
+/

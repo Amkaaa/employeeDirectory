@@ -1,0 +1,25 @@
+﻿color: rgb(209, 19, 58); // red
+
+color: rgb(241, 152, 50); // shar
+
+===
+
+ClientContext = Jqeury table tatah
+
+SharePoint
+
+Loop deed oruulah
+
+
+
+
+
+
+
+
+
+
+Хийх зүйл:
+HR - аас хүний нэр зураг татах
+1. Саналын систем, Үйлчилгээ, Бүтээгдэхүүн сайжруулалт, Үнэлгээ хийдэг байх(View, Like) .
+2. Хүн хайх зураг харуулах

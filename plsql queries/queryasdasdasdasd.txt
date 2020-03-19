@@ -1,0 +1,10 @@
+select depid
+from departments
+where isactive = 1
+order by name
+
+
+select *
+from employees
+where depid = 0145
+	and idvehtei = 1

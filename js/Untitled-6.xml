@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="getEmployee"
+       startOnLoad="true"
+       statistics="enable"
+       trace="enable"
+       transports="http,https">
+   <target>
+      <inSequence>
+         <log level="full" separator="&#xA;">
+            <property name="=============================================="
+                      value="SERVICE STARTING (getEmployee) =========================="/>
+         </log>
+         <sequence key="check_header_params"/>
+         <log level="custom" separator="&#xA;">
+            <property name="--------------Calling getEmployee() -----------------------"
+                      value="----"/>
+
+                         <property name="depid"
+                      expression="json-eval($.Request.depid)"/>
+                      
+         </log>
+
+               <property name="depid"
+                      expression="json-eval($.Request.depid)"/>
+
+            <property name="--------------Calling getEmployee() -----------------------"
+                      value="----"/>
+                      
+         <property name="header_status"
+                   scope="default"
+                   type="STRING"
+                   value="SUCCESS"/>
+         <payloadFactory media-type="xml">
+            <format>
+               <Request>
+                  <depid>$1</depid>
+               </Request>
+            </format>
+            <args>
+               <arg evaluator="xml" expression="$ctx:depid"/>
+            </args>
+         </payloadFactory>
+         <call>
+            <endpoint>
+               <address uri="http://wso2app-test.xac0000.mn:80/services/test_db/getEmpInfo"/>
+            </endpoint>
+         </call>
+         <property name="messageType"
+                   scope="axis2"
+                   type="STRING"
+                   value="application/json"/>
+         <property expression="json-eval($.Response)" name="response" scope="default"/>
+         <property expression="$axis2:HTTP_SC" name="HTTP_CODE" type="STRING"/>
+         <filter xpath="get-property('HTTP_CODE') != '200'">
+            <then>
+               <property name="ecode" scope="default" value="501"/>
+               <property name="header_status" scope="default" value="FAILURE"/>
+               <sequence key="error_handler"/>
+               <respond/>
+            </then>
+         </filter>
+         <script language="js">var repo = mc.getProperty('response');
+            var res = repo.replace('\{"@nil":"true"}', '""');
+            print('-------------------------- script1 ----------------' + res);
+            mc.setProperty('replaceData', res);</script>
+         <property expression="get-property('replaceData')" name="res"/>
+         <payloadFactory media-type="json">
+            <format>
+{
+          "Source":"$1",
+          "Function":"$2",
+          "UserId":"$3",
+          "SecurityCode":"$4",
+          "Status" : "$8",  
+          "RequestId":"$5",
+          "RequestType":"A",
+          "LanguageId":"$7",
+          "Response": $9
+}
+               
+  </format>
+            <args>
+               <arg evaluator="xml" expression="$ctx:Source"/>
+               <arg evaluator="xml" expression="$ctx:Function"/>
+               <arg evaluator="xml" expression="$ctx:UserId"/>
+               <arg evaluator="xml" expression="$ctx:SecurityCode"/>
+               <arg evaluator="xml" expression="$ctx:RequestId"/>
+               <arg evaluator="xml" expression="$ctx:RequestType"/>
+               <arg evaluator="xml" expression="$ctx:LangId"/>
+               <arg evaluator="xml" expression="$ctx:header_status"/>
+               <arg evaluator="xml" expression="$ctx:res"/>
+            </args>
+         </payloadFactory>
+         <property expression="json-eval($)"
+                   name="response"
+                   scope="default"
+                   type="STRING"/>
+         <sequence key="write_log"/>
+         <respond/>
+      </inSequence>
+      <outSequence>
+         <log level="full">
+            <property name="-------------------"
+                      value="SERVICE ENDS HERE --------------------------"/>
+         </log>
+         <send/>
+      </outSequence>
+      <faultSequence>
+         <log level="full">
+            <property name="Caused Error" value="Service iin aldaa garsan!!!"/>
+         </log>
+         <property name="ecode" scope="default" value="501"/>
+         <property name="header_status" scope="default" value="FAILURE"/>
+         <sequence key="error_handler"/>
+         <respond/>
+      </faultSequence>
+   </target>
+   <description>Department medeelel awah</description>
+</proxy>
+                                <?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="getEmployee"
+       startOnLoad="true"
+       statistics="enable"
+       trace="enable"
+       transports="http,https">
+   <target>
+      <inSequence>
+         <log level="full" separator="&#xA;">
+            <property name="=============================================="
+                      value="SERVICE STARTING (getEmployee) =========================="/>
+         </log>
+         <sequence key="check_header_params"/>
+         <log level="custom" separator="&#xA;">
+            <property name="--------------Calling getEmployee() -----------------------"
+                      value="----"/>
+         </log>
+            <property name="--------------Calling getEmployee() -----------------------"
+                      value="----"/>
+                      
+         <property name="header_status"
+                   scope="default"
+                   type="STRING"
+                   value="SUCCESS"/>
+         <payloadFactory media-type="xml">
+            <format>
+               <Request>
+                  <depid>$1</depid>
+               </Request>
+            </format>
+            <args>
+               <arg evaluator="json" expression="$.Request.depid"/>
+            </args>
+         </payloadFactory>
+         <call>
+            <endpoint>
+               <address uri="http://wso2app-test.xac0000.mn:80/services/test_db/getEmpInfo"/>
+            </endpoint>
+         </call>
+         <property name="messageType"
+                   scope="axis2"
+                   type="STRING"
+                   value="application/json"/>
+         <property expression="json-eval($.Response)" name="response" scope="default"/>
+         <property expression="$axis2:HTTP_SC" name="HTTP_CODE" type="STRING"/>
+         <filter xpath="get-property('HTTP_CODE') != '200'">
+            <then>
+               <property name="ecode" scope="default" value="501"/>
+               <property name="header_status" scope="default" value="FAILURE"/>
+               <sequence key="error_handler"/>
+               <respond/>
+            </then>
+         </filter>
+         <script language="js">var repo = mc.getProperty('response');
+            var res = repo.replace('\{"@nil":"true"}', '""');
+            print('-------------------------- script1 ----------------' + res);
+            mc.setProperty('replaceData', res);</script>
+         <property expression="get-property('replaceData')" name="res"/>
+         <payloadFactory media-type="json">
+            <format>
+{
+          "Source":"$1",
+          "Function":"$2",
+          "UserId":"$3",
+          "SecurityCode":"$4",
+          "Status" : "$8",  
+          "RequestId":"$5",
+          "RequestType":"A",
+          "LanguageId":"$7",
+          "Response": $9
+}
+               
+  </format>
+            <args>
+               <arg evaluator="xml" expression="$ctx:Source"/>
+               <arg evaluator="xml" expression="$ctx:Function"/>
+               <arg evaluator="xml" expression="$ctx:UserId"/>
+               <arg evaluator="xml" expression="$ctx:SecurityCode"/>
+               <arg evaluator="xml" expression="$ctx:RequestId"/>
+               <arg evaluator="xml" expression="$ctx:RequestType"/>
+               <arg evaluator="xml" expression="$ctx:LangId"/>
+               <arg evaluator="xml" expression="$ctx:header_status"/>
+               <arg evaluator="xml" expression="$ctx:res"/>
+            </args>
+         </payloadFactory>
+         <property expression="json-eval($)"
+                   name="response"
+                   scope="default"
+                   type="STRING"/>
+         <sequence key="write_log"/>
+         <respond/>
+      </inSequence>
+      <outSequence>
+         <log level="full">
+            <property name="-------------------"
+                      value="SERVICE ENDS HERE --------------------------"/>
+         </log>
+         <send/>
+      </outSequence>
+      <faultSequence>
+         <log level="full">
+            <property name="Caused Error" value="Service iin aldaa garsan!!!"/>
+         </log>
+         <property name="ecode" scope="default" value="501"/>
+         <property name="header_status" scope="default" value="FAILURE"/>
+         <sequence key="error_handler"/>
+         <respond/>
+      </faultSequence>
+   </target>
+   <description>Department medeelel awah</description>
+</proxy>
+                                <?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="getEmployee"
+       startOnLoad="true"
+       statistics="enable"
+       trace="enable"
+       transports="http,https">
+   <target>
+      <inSequence>
+         <log level="full" separator="&#xA;">
+            <property name="=============================================="
+                      value="SERVICE STARTING (getEmployee) =========================="/>
+         </log>
+         <sequence key="check_header_params"/>
+         <log level="custom" separator="&#xA;">
+            <property name="--------------Calling getEmployee() -----------------------"
+                      value="----"/>
+         </log>
+            <property name="--------------Calling getEmployee() -----------------------"
+                      value="----"/>
+                      
+         <property name="header_status"
+                   scope="default"
+                   type="STRING"
+                   value="SUCCESS"/>
+         <payloadFactory media-type="xml">
+            <format>
+               <Request>
+                  <depid>$1</depid>
+               </Request>
+            </format>
+            <args>
+               <arg evaluator="json" expression="$.Request.depid"/>
+            </args>
+         </payloadFactory>
+         <call>
+            <endpoint>
+               <address uri="http://wso2app-test.xac0000.mn:80/services/test_db/getEmpInfo"/>
+            </endpoint>
+         </call>
+         <property name="messageType"
+                   scope="axis2"
+                   type="STRING"
+                   value="application/json"/>
+         <property expression="json-eval($.Response)" name="response" scope="default"/>
+         <property expression="$axis2:HTTP_SC" name="HTTP_CODE" type="STRING"/>
+         <filter xpath="get-property('HTTP_CODE') != '200'">
+            <then>
+               <property name="ecode" scope="default" value="501"/>
+               <property name="header_status" scope="default" value="FAILURE"/>
+               <sequence key="error_handler"/>
+               <respond/>
+            </then>
+         </filter>
+         <script language="js">var repo = mc.getProperty('response');
+            var res = repo.replace('\{"@nil":"true"}', '""');
+            print('-------------------------- script1 ----------------' + res);
+            mc.setProperty('replaceData', res);</script>
+         <property expression="get-property('replaceData')" name="res"/>
+         <payloadFactory media-type="json">
+            <format>
+{
+          "Source":"$1",
+          "Function":"$2",
+          "UserId":"$3",
+          "SecurityCode":"$4",
+          "Status" : "$8",  
+          "RequestId":"$5",
+          "RequestType":"A",
+          "LanguageId":"$7",
+          "Response": $9
+}
+               
+  </format>
+            <args>
+               <arg evaluator="xml" expression="$ctx:Source"/>
+               <arg evaluator="xml" expression="$ctx:Function"/>
+               <arg evaluator="xml" expression="$ctx:UserId"/>
+               <arg evaluator="xml" expression="$ctx:SecurityCode"/>
+               <arg evaluator="xml" expression="$ctx:RequestId"/>
+               <arg evaluator="xml" expression="$ctx:RequestType"/>
+               <arg evaluator="xml" expression="$ctx:LangId"/>
+               <arg evaluator="xml" expression="$ctx:header_status"/>
+               <arg evaluator="xml" expression="$ctx:res"/>
+            </args>
+         </payloadFactory>
+         <property expression="json-eval($)"
+                   name="response"
+                   scope="default"
+                   type="STRING"/>
+         <sequence key="write_log"/>
+         <respond/>
+      </inSequence>
+      <outSequence>
+         <log level="full">
+            <property name="-------------------"
+                      value="SERVICE ENDS HERE --------------------------"/>
+         </log>
+         <send/>
+      </outSequence>
+      <faultSequence>
+         <log level="full">
+            <property name="Caused Error" value="Service iin aldaa garsan!!!"/>
+         </log>
+         <property name="ecode" scope="default" value="501"/>
+         <property name="header_status" scope="default" value="FAILURE"/>
+         <sequence key="error_handler"/>
+         <respond/>
+      </faultSequence>
+   </target>
+   <description>Department medeelel awah</description>
+</proxy>
+                                
